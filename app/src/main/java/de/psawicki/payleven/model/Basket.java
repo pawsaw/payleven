@@ -1,5 +1,9 @@
 package de.psawicki.payleven.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +110,58 @@ public class Basket {
 		
 		return totalBasketPrice;
 	}
-	
-	
+
+    public static JSONObject toJSON(Basket basket) {
+        JSONObject result = new JSONObject();
+
+        try {
+            JSONArray productsInBasketJSON = new JSONArray();
+            for (ProductInBasket currProductInBasket : basket.productsInBasketSorted) {
+                JSONObject productJSON = new JSONObject();
+
+                productJSON.put("id", currProductInBasket.product.id);
+                productJSON.put("name", currProductInBasket.product.name);
+                productJSON.put("price", currProductInBasket.product.price);
+                JSONObject currProductInBasketJSON = new JSONObject();
+                currProductInBasketJSON.put("product", productJSON);
+                currProductInBasketJSON.put("amount", currProductInBasket.amount);
+                currProductInBasketJSON.put("totalPrice", currProductInBasket.getTotalPrice());
+                productsInBasketJSON.put(currProductInBasketJSON);
+
+            }
+
+            result.put("productsInBasket", productsInBasketJSON);
+            result.put("totalBasketPrice", basket.getTotalBasketPrice());
+        } catch (JSONException e) {
+            // WON'T HAPPEN. DO NOTHING!
+        }
+
+        return result;
+    }
+
+    public static Basket fromJSON(JSONObject basketJSON) {
+        Basket basket = new Basket();
+
+        try {
+            JSONArray productsInBasketJSON = basketJSON.getJSONArray("productsInBasket");
+            if (productsInBasketJSON != null) {
+                for (int i = 0; i < productsInBasketJSON.length(); i++) {
+                    JSONObject productInBasketJSON = productsInBasketJSON.getJSONObject(i);
+                    JSONObject productJSON = productInBasketJSON.getJSONObject("product");
+                    Product product = new Product(
+                            productJSON.getString("id"),
+                            productJSON.getString("name"),
+                            (float) productJSON.getDouble("price"));
+                    int amount = productInBasketJSON.getInt("amount");
+                    basket.addProductToBasket(product, amount);
+                }
+            }
+
+        } catch (JSONException e) {
+            //TODO: error handling
+        }
+
+        return basket;
+    }
+
 }
