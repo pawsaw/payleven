@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import de.psawicki.payleven.R;
+import de.psawicki.payleven.app.PaylevenApplication;
 
 public class MainActivity extends Activity {
 
@@ -24,8 +25,20 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ((PaylevenApplication) getApplication()).getBasketSession().reloadSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ((PaylevenApplication) getApplication()).getBasketSession().saveSession(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
