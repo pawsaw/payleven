@@ -9,13 +9,13 @@ import de.psawicki.payleven.model.Catalog;
  */
 public class PaylevenApplication extends Application {
 
-    private BasketSession basketSession = null;
+    private BasketSession basketSession = new BasketSession();
+
+    private Catalog catalog = new Catalog();
 
     public BasketSession getBasketSession() {
         return basketSession;
     }
-
-    private Catalog catalog;
 
     public void setCatalog(Catalog catalog) {
         this.catalog = catalog;
@@ -25,9 +25,4 @@ public class PaylevenApplication extends Application {
         return catalog;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        basketSession = new BasketSession();
-    }
 }
