@@ -4,27 +4,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeSet;
 
 public class Basket {
 	
 	public static class ProductInBasket {
 		
 		public final Product product;
-		public int amount;
-		
-		public ProductInBasket(Product product, int amount) {
-			super();
+        public int quantity;
+
+        public ProductInBasket(Product product, int quantity) {
+            super();
 			this.product = product;
-			this.amount = amount;
-		}
+            this.quantity = quantity;
+        }
 		
 		public float getTotalPrice() {
-			return amount * product.price;
-		}
+            return quantity * product.price;
+        }
 
 		@Override
 		public int hashCode() {
@@ -52,49 +53,56 @@ public class Basket {
 			return true;
 		}
 	}
-	
-	// The total basket price. "Lazy Calculation" on the first access. Reset on basket change.
+
+    private static final Comparator<ProductInBasket> PRODUCT_IN_BASKET_COMPARATOR = new Comparator<ProductInBasket>() {
+
+        @Override
+        public int compare(ProductInBasket lhs, ProductInBasket rhs) {
+            return lhs.product.name.compareTo(rhs.product.name);
+        }
+    };
+
+    // The total basket price. "Lazy Calculation" on the first access. Reset on basket change.
 	private Float totalBasketPrice = null;
 
 	// O(1) access to an existing product in basket
-	private final Map<Product, ProductInBasket> productsInBasket = new HashMap<>();
-	
-	// Access to sorted products in the basket
-	private final TreeSet<ProductInBasket> productsInBasketSorted = new TreeSet<>(new Comparator<ProductInBasket>() {
+    public final Map<Product, ProductInBasket> productsInBasket = new HashMap<>();
 
-		@Override
-		public int compare(ProductInBasket lhs, ProductInBasket rhs) {
-			return lhs.product.name.compareTo(rhs.product.name);
-		}
-	});
-	
-	
-	public void addProductToBasket(Product product, int amount) {
-		
-		ProductInBasket productInBasket = productsInBasket.get(product);
+	// Access to sorted products in the basket
+    public final ArrayList<ProductInBasket> productsInBasketSorted = new ArrayList<>();
+
+    private void sortProductsInBasket() {
+        Collections.sort(productsInBasketSorted, PRODUCT_IN_BASKET_COMPARATOR);
+    }
+
+    public void addProductToBasket(Product product, int quantity) {
+
+        ProductInBasket productInBasket = productsInBasket.get(product);
 		if (productInBasket != null) {
 			// update the product in basket
-			productInBasket.amount += amount;
-		} else {
+            productInBasket.quantity += quantity;
+        } else {
 			// if the product doesn't exist in the basket yet, put it in
-			productInBasket = new ProductInBasket(product, amount);
-			productsInBasket.put(product, productInBasket);
+            productInBasket = new ProductInBasket(product, quantity);
+            productsInBasket.put(product, productInBasket);
 			productsInBasketSorted.add(productInBasket);
-		}
+            sortProductsInBasket();
+        }
 		
 		totalBasketPrice = null;
 	}
-	
-	public void removeProductFromBasket(Product product, int amount) {
-		
-		ProductInBasket productInBasket = productsInBasket.get(product);
+
+    public void removeProductFromBasket(Product product, int quantity) {
+
+        ProductInBasket productInBasket = productsInBasket.get(product);
 		if (productInBasket != null) {
 			// update the product in basket
-			productInBasket.amount -= amount;
-			if (productInBasket.amount <= 0) {
-				productsInBasket.remove(productInBasket);
+            productInBasket.quantity -= quantity;
+            if (productInBasket.quantity <= 0) {
+                productsInBasket.remove(productInBasket);
 				productsInBasketSorted.remove(productInBasket);
-			}
+                sortProductsInBasket();
+            }
 			
 			totalBasketPrice = null;
 		} 
@@ -124,7 +132,7 @@ public class Basket {
                 productJSON.put("price", currProductInBasket.product.price);
                 JSONObject currProductInBasketJSON = new JSONObject();
                 currProductInBasketJSON.put("product", productJSON);
-                currProductInBasketJSON.put("amount", currProductInBasket.amount);
+                currProductInBasketJSON.put("quantity", currProductInBasket.quantity);
                 currProductInBasketJSON.put("totalPrice", currProductInBasket.getTotalPrice());
                 productsInBasketJSON.put(currProductInBasketJSON);
 
@@ -152,8 +160,8 @@ public class Basket {
                             productJSON.getString("id"),
                             productJSON.getString("name"),
                             (float) productJSON.getDouble("price"));
-                    int amount = productInBasketJSON.getInt("amount");
-                    basket.addProductToBasket(product, amount);
+                    int quantity = productInBasketJSON.getInt("quantity");
+                    basket.addProductToBasket(product, quantity);
                 }
             }
 

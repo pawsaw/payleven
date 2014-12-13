@@ -1,28 +1,35 @@
 package de.psawicki.payleven.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
 public class Category {
 
+    private static final Comparator<Product> PRODUCT_COMPARATOR = new Comparator<Product>() {
+
+        @Override
+        public int compare(Product lhs, Product rhs) {
+            return lhs.name.compareTo(rhs.name);
+        }
+    };
+
 	public final String id;
 	public final String name;
-	
-	// sorted iterable
-	public final TreeSet<Product> products = new TreeSet<>(new Comparator<Product>() {
 
-		@Override
-		public int compare(Product lhs, Product rhs) {
-			return lhs.name.compareTo(rhs.name);
-		}
-	});
-	
+    public final ArrayList<Product> products = new ArrayList<>();
+
 	public Category(String id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
+
+    public void sortProducts() {
+        Collections.sort(products, PRODUCT_COMPARATOR);
+    }
 
 	@Override
 	public int hashCode() {

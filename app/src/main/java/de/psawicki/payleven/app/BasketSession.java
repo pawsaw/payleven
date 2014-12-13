@@ -44,13 +44,13 @@ public class BasketSession {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PREFKEY_BASKET, Basket.toJSON(basket).toString()).commit();
     }
 
-    public void addProductToBasket(Product product, int amount) {
-        basket.addProductToBasket(product, amount);
+    public void addProductToBasket(Product product, int quantity) {
+        basket.addProductToBasket(product, quantity);
         notifyOnBasketChange();
     }
 
-    public void removeProductFromBasket(Product product, int amount) {
-        basket.removeProductFromBasket(product, amount);
+    public void removeProductFromBasket(Product product, int quantity) {
+        basket.removeProductFromBasket(product, quantity);
         notifyOnBasketChange();
     }
 

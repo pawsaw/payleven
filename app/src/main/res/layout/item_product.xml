@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView_productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="productName" />
+
+    <TextView
+        android:id="@+id/textView_quantityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/textView_quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/textView_quantityValue"
+        android:layout_margin="5dp"
+        android:text="@string/inBasket" />
+
+    <TextView
+        android:id="@+id/textView_pricePerUnitLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@id/textView_productName"
+        android:text="@string/pricePerUnit" />
+
+    <TextView
+        android:id="@+id/textView_pricePerUnitValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@id/textView_productName"
+        android:layout_toRightOf="@id/textView_pricePerUnitLabel"
+        android:text="0,00" />
+
+    <TextView
+        android:id="@+id/textView_totalPriceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@id/textView_quantityLabel"
+        android:layout_alignParentRight="true"
+        android:text="0,00" />
+
+    <TextView
+        android:id="@+id/textView_totalPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@id/textView_quantityLabel"
+        android:layout_toLeftOf="@id/textView_totalPriceValue"
+        android:text="@string/totalPrice" />
+
+</RelativeLayout>

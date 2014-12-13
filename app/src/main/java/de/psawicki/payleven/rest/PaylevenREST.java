@@ -47,8 +47,11 @@ public class PaylevenREST {
 		} catch (JSONException e) {
 			throw new PaylevenRESTException(e);
 		}
-		
-		return result;
+
+        result.sortCategories();
+        result.sortProducts();
+
+        return result;
 	}
 	
 	private static Product productFromJson(JSONObject json) throws PaylevenRESTException, JSONException {
@@ -110,6 +113,8 @@ public class PaylevenREST {
 			product.categories.add(category);
 			category.products.add(product);
 		}
+
+        category.sortProducts();
         
         return category;
     }
