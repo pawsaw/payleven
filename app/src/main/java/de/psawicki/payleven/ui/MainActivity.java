@@ -16,43 +16,13 @@ import de.psawicki.payleven.app.PaylevenApplication;
 
 public class MainActivity extends Activity {
 
+    private PaylevenApplication paylevenApplication = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment()).commit();
-        }
+        paylevenApplication = (PaylevenApplication) getApplication();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ((PaylevenApplication) getApplication()).getBasketSession().reloadSession(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        ((PaylevenApplication) getApplication()).getBasketSession().saveSession(this);
-    }
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container,
-                    false);
-            return rootView;
-        }
-    }
 }

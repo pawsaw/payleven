@@ -36,6 +36,12 @@ public class CatalogListAdapter extends BaseExpandableListAdapter implements Bas
     private Catalog catalog;
     private Basket basket;
 
+    public CatalogListAdapter(LayoutInflater layoutInflater, Catalog catalog, Basket basket) {
+        this.layoutInflater = layoutInflater;
+        this.catalog = catalog;
+        this.basket = basket;
+    }
+
     @Override
     public int getGroupCount() {
         return catalog.categories.size();

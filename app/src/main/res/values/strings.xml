@@ -7,5 +7,7 @@
     <string name="inBasket">in basket:</string>
     <string name="pricePerUnit">price per unit (EUR):</string>
     <string name="totalPrice">total (EUR):</string>
+    <string name="catalogLabel">Catalog</string>
+    <string name="basketLabel">Basket</string>
 
 </resources>
