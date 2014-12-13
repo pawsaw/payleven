@@ -60,6 +60,7 @@ public class BasketListAdapter extends BaseAdapter implements BasketSession.IOnB
             productViewHolder.inBasketTextView = (TextView) convertView.findViewById(R.id.textView_quantityValue);
             productViewHolder.pricePerUnitTextView = (TextView) convertView.findViewById(R.id.textView_pricePerUnitValue);
             productViewHolder.totalPriceTextView = (TextView) convertView.findViewById(R.id.textView_totalPriceValue);
+            convertView.setTag(productViewHolder);
         }
 
         Product product = basket.productsInBasketSorted.get(position).product;
@@ -67,9 +68,9 @@ public class BasketListAdapter extends BaseAdapter implements BasketSession.IOnB
 
         productViewHolder = (ProductViewHolder) convertView.getTag();
         productViewHolder.productNameTextView.setText(product.name);
-        productViewHolder.inBasketTextView.setText(productInBasket != null ? productInBasket.quantity : 0);
-        productViewHolder.pricePerUnitTextView.setText(String.format(".2f", product.price));
-        productViewHolder.totalPriceTextView.setText(String.format(".2f", (productInBasket != null ? productInBasket.getTotalPrice() : 0)));
+        productViewHolder.inBasketTextView.setText("" + (productInBasket != null ? productInBasket.quantity : 0));
+        productViewHolder.pricePerUnitTextView.setText(String.format("%.2f", product.price));
+        productViewHolder.totalPriceTextView.setText(String.format("%.2f", (productInBasket != null ? productInBasket.getTotalPrice() : 0.0)));
 
         return convertView;
     }

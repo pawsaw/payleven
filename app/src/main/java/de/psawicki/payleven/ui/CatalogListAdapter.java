@@ -11,6 +11,7 @@ import org.w3c.dom.Text;
 
 import de.psawicki.payleven.R;
 import de.psawicki.payleven.app.BasketSession;
+import de.psawicki.payleven.app.CatalogSession;
 import de.psawicki.payleven.model.Basket;
 import de.psawicki.payleven.model.Catalog;
 import de.psawicki.payleven.model.Product;
@@ -18,7 +19,7 @@ import de.psawicki.payleven.model.Product;
 /**
  * Created by Pawel Sawicki on 13.12.14.
  */
-public class CatalogListAdapter extends BaseExpandableListAdapter implements BasketSession.IOnBasketChangedListener {
+public class CatalogListAdapter extends BaseExpandableListAdapter implements BasketSession.IOnBasketChangedListener, CatalogSession.IOnCatalogChangedListener {
 
     static private class CategoryViewHolder {
         TextView categoryNameTextView;
@@ -107,6 +108,7 @@ public class CatalogListAdapter extends BaseExpandableListAdapter implements Bas
             productViewHolder.inBasketTextView = (TextView) convertView.findViewById(R.id.textView_quantityValue);
             productViewHolder.pricePerUnitTextView = (TextView) convertView.findViewById(R.id.textView_pricePerUnitValue);
             productViewHolder.totalPriceTextView = (TextView) convertView.findViewById(R.id.textView_totalPriceValue);
+            convertView.setTag(productViewHolder);
         }
 
         Product product = catalog.categories.get(groupPosition).products.get(childPosition);
@@ -114,9 +116,9 @@ public class CatalogListAdapter extends BaseExpandableListAdapter implements Bas
 
         productViewHolder = (ProductViewHolder) convertView.getTag();
         productViewHolder.productNameTextView.setText(product.name);
-        productViewHolder.inBasketTextView.setText(productInBasket != null ? productInBasket.quantity : 0);
-        productViewHolder.pricePerUnitTextView.setText(String.format(".2f", product.price));
-        productViewHolder.totalPriceTextView.setText(String.format(".2f", (productInBasket != null ? productInBasket.getTotalPrice() : 0)));
+        productViewHolder.inBasketTextView.setText("" + (productInBasket != null ? productInBasket.quantity : 0));
+        productViewHolder.pricePerUnitTextView.setText(String.format("%.2f", product.price));
+        productViewHolder.totalPriceTextView.setText(String.format("%.2f", (productInBasket != null ? productInBasket.getTotalPrice() : 0.0)));
 
         return convertView;
     }
@@ -129,6 +131,12 @@ public class CatalogListAdapter extends BaseExpandableListAdapter implements Bas
     @Override
     public void basketChanged(Basket basket) {
         this.basket = basket;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void catalogChanged(Catalog catalog) {
+        this.catalog = catalog;
         notifyDataSetChanged();
     }
 }

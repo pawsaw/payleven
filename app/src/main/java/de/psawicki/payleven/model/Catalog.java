@@ -29,4 +29,8 @@ public class Catalog {
         });
     }
 
+    public boolean isEmpty() {
+        return products.isEmpty();
+    }
+
 }

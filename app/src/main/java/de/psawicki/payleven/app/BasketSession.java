@@ -13,7 +13,7 @@ import de.psawicki.payleven.model.Basket;
 import de.psawicki.payleven.model.Product;
 
 /**
- * Created by pawel on 12.12.14.
+ * Created by Pawel Sawicki on 12.12.14.
  */
 public class BasketSession {
 

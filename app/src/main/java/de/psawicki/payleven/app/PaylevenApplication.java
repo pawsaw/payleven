@@ -10,19 +10,13 @@ import de.psawicki.payleven.model.Catalog;
 public class PaylevenApplication extends Application {
 
     private BasketSession basketSession = new BasketSession();
-
-    private Catalog catalog = new Catalog();
+    private CatalogSession catalogSession = new CatalogSession();
 
     public BasketSession getBasketSession() {
         return basketSession;
     }
 
-    public void setCatalog(Catalog catalog) {
-        this.catalog = catalog;
+    public CatalogSession getCatalogSession() {
+        return catalogSession;
     }
-
-    public Catalog getCatalog() {
-        return catalog;
-    }
-
 }

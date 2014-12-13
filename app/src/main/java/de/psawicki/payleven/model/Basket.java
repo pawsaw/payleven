@@ -15,7 +15,7 @@ public class Basket {
 	public static class ProductInBasket {
 		
 		public final Product product;
-        public int quantity;
+        public int quantity = 0;
 
         public ProductInBasket(Product product, int quantity) {
             super();
@@ -99,8 +99,8 @@ public class Basket {
 			// update the product in basket
             productInBasket.quantity -= quantity;
             if (productInBasket.quantity <= 0) {
-                productsInBasket.remove(productInBasket);
-				productsInBasketSorted.remove(productInBasket);
+                productsInBasket.remove(productInBasket.product);
+                productsInBasketSorted.remove(productInBasket);
                 sortProductsInBasket();
             }
 			
