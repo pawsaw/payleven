@@ -5,7 +5,7 @@ import android.app.Application;
 import de.psawicki.payleven.model.Catalog;
 
 /**
- * Created by pawel on 12.12.14.
+ * Created by Pawel Sawicki on 12.12.14.
  */
 public class PaylevenApplication extends Application {
 
