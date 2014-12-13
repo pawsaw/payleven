@@ -8,6 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:textSize="10pt"
         android:text="productName" />
 
     <TextView
@@ -15,13 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:layout_alignBaseline="@id/textView_productName"
         android:layout_alignParentRight="true"
+        android:textStyle="bold"
         android:text="0" />
 
     <TextView
         android:id="@+id/textView_quantityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textView_productName"
         android:layout_toLeftOf="@id/textView_quantityValue"
         android:layout_margin="5dp"
         android:text="@string/inBasket" />
@@ -41,6 +46,7 @@
         android:layout_margin="5dp"
         android:layout_below="@id/textView_productName"
         android:layout_toRightOf="@id/textView_pricePerUnitLabel"
+        android:textStyle="bold"
         android:text="0,00" />
 
     <TextView
@@ -48,8 +54,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_below="@id/textView_quantityLabel"
+        android:layout_below="@id/textView_productName"
         android:layout_alignParentRight="true"
+        android:textStyle="bold"
         android:text="0,00" />
 
     <TextView
@@ -57,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_below="@id/textView_quantityLabel"
+        android:layout_below="@id/textView_productName"
         android:layout_toLeftOf="@id/textView_totalPriceValue"
         android:text="@string/totalPrice" />
 

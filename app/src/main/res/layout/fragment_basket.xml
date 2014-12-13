@@ -7,6 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="#a6b1c0cc"
         android:textSize="12pt"
         android:textColor="#000"
@@ -20,8 +21,42 @@
     <ListView
         android:id="@+id/listView_basket"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#ffe5fbff"
         android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="number of products:" />
+
+        <TextView
+            android:id="@+id/textView_totalNumberOfProducts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="total price (EUR):" />
+
+        <TextView
+            android:id="@+id/textView_totalBasketPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:text="0.00" />
+
+    </LinearLayout>
 
 </LinearLayout>

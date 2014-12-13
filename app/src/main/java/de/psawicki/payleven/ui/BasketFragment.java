@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import de.psawicki.payleven.R;
 import de.psawicki.payleven.app.BasketSession;
@@ -19,6 +20,9 @@ public class BasketFragment extends Fragment implements BasketSession.IOnBasketC
 
     private PaylevenApplication paylevenApplication = null;
     private BasketListAdapter basketListAdapter = null;
+
+    private TextView totalNumberOfProductsTextView = null;
+    private TextView totalBasketPriceTextView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class BasketFragment extends Fragment implements BasketSession.IOnBasketC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View basketFragmentView = inflater.inflate(R.layout.fragment_basket, container, false);
+
+        totalNumberOfProductsTextView = (TextView) basketFragmentView.findViewById(R.id.textView_totalNumberOfProducts);
+        totalBasketPriceTextView = (TextView) basketFragmentView.findViewById(R.id.textView_totalBasketPrice);
+
         ListView basketListView = (ListView) basketFragmentView.findViewById(R.id.listView_basket);
         basketListView.setAdapter(basketListAdapter);
         basketListView.setOnItemClickListener(onProductRemoveFromBasketListener);
@@ -49,7 +57,8 @@ public class BasketFragment extends Fragment implements BasketSession.IOnBasketC
 
     @Override
     public void basketChanged(Basket basket) {
-
+        totalNumberOfProductsTextView.setText("" + basket.getNumberOfProductsInBasket());
+        totalBasketPriceTextView.setText(String.format("%.2f", basket.getTotalBasketPrice()));
     }
 
     private final AdapterView.OnItemClickListener onProductRemoveFromBasketListener = new AdapterView.OnItemClickListener() {
