@@ -36,8 +36,8 @@ public class BasketFragment extends Fragment implements BasketSession.IOnBasketC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        paylevenApplication.getBasketSession().addOnBasketChangedListener(this);
-        paylevenApplication.getBasketSession().addOnBasketChangedListener(basketListAdapter);
+        paylevenApplication.getBasketSession().removeOnBasketChangedListener(this);
+        paylevenApplication.getBasketSession().removeOnBasketChangedListener(basketListAdapter);
     }
 
     @Nullable
@@ -51,6 +51,8 @@ public class BasketFragment extends Fragment implements BasketSession.IOnBasketC
         ListView basketListView = (ListView) basketFragmentView.findViewById(R.id.listView_basket);
         basketListView.setAdapter(basketListAdapter);
         basketListView.setOnItemClickListener(onProductRemoveFromBasketListener);
+
+        basketChanged(paylevenApplication.getBasketSession().getBasket());
 
         return basketFragmentView;
     }
